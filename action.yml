@@ -1,4 +1,4 @@
-name: Xcodebuild
+name: Xcodebuild CLI
 description: Runs xcodebuild e.g. to run tests.
 author: Sergey Sova (fork)
 inputs:

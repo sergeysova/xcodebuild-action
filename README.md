@@ -96,6 +96,10 @@ Whether the undefined behavior sanitizer should be enabled. See also `xcodebuild
 
 The path that should be used for the result bundle. See also `xcodebuild`'s `-resultBundlePath`.
 
+### `archive-path`
+
+Specifies the path for the archive produced by the archive action. See also `xcodebuild`'s `-archivePath`.
+
 ### `result-bundle-version`
 
 The version that should be used for the result bundle. See also `xcodebuild`'s `-resultBundleVersion`.
