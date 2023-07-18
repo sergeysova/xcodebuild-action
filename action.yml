@@ -1,6 +1,6 @@
-name: Xcodebuild Action
+name: Xcodebuild
 description: Runs xcodebuild e.g. to run tests.
-author: ser.soft GmbH
+author: Sergey Sova (fork)
 inputs:
   workspace:
     description: The path to the xcworkspace to build. Mutually exclusive with `project` and `spm-package`. See also `xcodebuild`'s `-workspace`.
