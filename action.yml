@@ -68,6 +68,9 @@ inputs:
   result-bundle-path:
     description: The path that should be used for the result bundle. See also `xcodebuild`'s `-resultBundlePath`.
     required: false
+  archive-path:
+    description: Specifies the path for the archive produced by the archive action
+    required: false
   result-bundle-version:
     description: The version that should be used for the result bundle. See also `xcodebuild`'s `-resultBundleVersion`.
     required: false

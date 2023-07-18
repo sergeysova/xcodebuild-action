@@ -221,6 +221,7 @@ async function main() {
     addBoolArg('enable-thread-sanitizer', 'enableThreadSanitizer');
     addBoolArg('enable-undefined-behavior-sanitizer', 'enableUndefinedBehaviorSanitizer');
     addPathArg('result-bundle-path', 'resultBundlePath');
+    addPathArg('archive-path', 'archivePath');
     addInputArg('result-bundle-version', 'resultBundleVersion');
     addPathArg('cloned-source-packages-path', 'clonedSourcePackagesDirPath');
     addPathArg('derived-data-path', 'derivedDataPath');
