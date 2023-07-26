@@ -10,11 +10,11 @@ Note that this action needs to run on macOS. All other platforms will fail!
 
 ### `workspace`
 
-The path to the xcworkspace to build. Mutually exclusive with `project` and `spm-package`.  Either `workspace`, `project` or `spm-package` must be set. See also `xcodebuild`'s `-workspace`. 
+The path to the xcworkspace to build. Mutually exclusive with `project` and `spm-package`. Either `workspace`, `project` or `spm-package` must be set. See also `xcodebuild`'s `-workspace`.
 
 ### `project`
 
-The path to the xcodeproj to build. Mutually exclusive with `workspace` and `spm-package`.  Either `workspace`, `project` or `spm-package` must be set. See also `xcodebuild`'s `-project`.
+The path to the xcodeproj to build. Mutually exclusive with `workspace` and `spm-package`. Either `workspace`, `project` or `spm-package` must be set. See also `xcodebuild`'s `-project`.
 
 ### `spm-package`
 
@@ -51,6 +51,14 @@ The path to an xcconfig file with build settings overrides. See also `xcodebuild
 ### `jobs`
 
 The number of jobs to use for building. See also `xcodebuild`'s `-jobs`.
+
+### `code-sign-identity`
+
+Identifier. Specifies the name of a code signing identity.
+
+### `code-signing-required`
+
+true or false for code signing.
 
 ### `parallelize-targets`
 
@@ -163,7 +171,6 @@ Default: `true`
 Whether `xcpretty` should use colored output (e.g. `xcpretty --color`).<br/>
 Default: `true`
 
-
 ## Outputs
 
 ### `unprocessed-command`
@@ -174,10 +181,10 @@ The unprocessed command from which the executed command was resolved. E.g. paths
 
 The command that was executed by this action. This will also be printed to the action output.
 
-
 ## Example Usage
 
 Use the following snippet when you want to run tests configured with the `MyApp` scheme inside a `MyApp` Xcode project:
+
 ```yaml
 uses: sersoft-gmbh/xcodebuild-action@v2
 with:

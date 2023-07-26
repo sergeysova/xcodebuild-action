@@ -34,44 +34,44 @@ const core = __importStar(__nccwpck_require__(186));
 const path = __importStar(__nccwpck_require__(17));
 const child_process_1 = __nccwpck_require__(81);
 const SIGNAL_NAME_TO_NUMBER_MAP = {
-    'SIGHUP': 1,
-    'SIGINT': 2,
-    'SIGQUIT': 3,
-    'SIGILL': 4,
-    'SIGTRAP': 5,
-    'SIGABRT': 6,
-    'SIGIOT': 6,
-    'SIGBUS': 7,
-    'SIGFPE': 8,
-    'SIGKILL': 9,
-    'SIGUSR1': 10,
-    'SIGSEGV': 11,
-    'SIGUSR2': 12,
-    'SIGPIPE': 13,
-    'SIGALRM': 14,
-    'SIGTERM': 15,
-    'SIGSTKFLT': 16,
-    'SIGCHLD': 17,
-    'SIGCONT': 18,
-    'SIGSTOP': 19,
-    'SIGTSTP': 20,
-    'SIGTTIN': 21,
-    'SIGTTOU': 22,
-    'SIGURG': 23,
-    'SIGXCPU': 24,
-    'SIGXFSZ': 25,
-    'SIGVTALRM': 26,
-    'SIGPROF': 27,
-    'SIGWINCH': 28,
-    'SIGIO': 29,
-    'SIGPOLL': 29,
-    'SIGPWR': 30,
-    'SIGSYS': 31,
-    'SIGUNUSED': 31,
+    SIGHUP: 1,
+    SIGINT: 2,
+    SIGQUIT: 3,
+    SIGILL: 4,
+    SIGTRAP: 5,
+    SIGABRT: 6,
+    SIGIOT: 6,
+    SIGBUS: 7,
+    SIGFPE: 8,
+    SIGKILL: 9,
+    SIGUSR1: 10,
+    SIGSEGV: 11,
+    SIGUSR2: 12,
+    SIGPIPE: 13,
+    SIGALRM: 14,
+    SIGTERM: 15,
+    SIGSTKFLT: 16,
+    SIGCHLD: 17,
+    SIGCONT: 18,
+    SIGSTOP: 19,
+    SIGTSTP: 20,
+    SIGTTIN: 21,
+    SIGTTOU: 22,
+    SIGURG: 23,
+    SIGXCPU: 24,
+    SIGXFSZ: 25,
+    SIGVTALRM: 26,
+    SIGPROF: 27,
+    SIGWINCH: 28,
+    SIGIO: 29,
+    SIGPOLL: 29,
+    SIGPWR: 30,
+    SIGSYS: 31,
+    SIGUNUSED: 31,
     // there isn't actually a number here.
-    'SIGBREAK': 97,
-    'SIGINFO': 98,
-    'SIGLOST': 99,
+    SIGBREAK: 97,
+    SIGINFO: 98,
+    SIGLOST: 99,
 };
 function argumentValueString(value, useResolvedValue = true, escapeValue = false) {
     function _cmdEscape(str) {
@@ -87,17 +87,17 @@ function argumentStrings(argument, useResolvedValue = true, escapeValue = false)
     return plain;
 }
 function allArgumentStrings(args, useResolvedValue = true, escapeValue = false) {
-    return args.flatMap(a => argumentStrings(a, useResolvedValue, escapeValue));
+    return args.flatMap((a) => argumentStrings(a, useResolvedValue, escapeValue));
 }
 async function runXcodebuild(args, xcprettyInv) {
     var _a;
-    const xcodebuildOut = xcprettyInv ? 'pipe' : process.stdout;
-    const xcodebuild = (0, child_process_1.spawn)('xcodebuild', allArgumentStrings(args), {
-        stdio: ['inherit', xcodebuildOut, process.stderr],
+    const xcodebuildOut = xcprettyInv ? "pipe" : process.stdout;
+    const xcodebuild = (0, child_process_1.spawn)("xcodebuild", allArgumentStrings(args), {
+        stdio: ["inherit", xcodebuildOut, process.stderr],
     });
     let finishedPromise = new Promise((resolve, reject) => {
-        xcodebuild.on('error', reject);
-        xcodebuild.on('exit', (exitCode, signal) => {
+        xcodebuild.on("error", reject);
+        xcodebuild.on("exit", (exitCode, signal) => {
             if (exitCode) {
                 resolve(exitCode);
             }
@@ -107,13 +107,13 @@ async function runXcodebuild(args, xcprettyInv) {
         });
     });
     if (xcprettyInv) {
-        const xcpretty = (0, child_process_1.spawn)('xcpretty', allArgumentStrings(xcprettyInv.args), {
-            stdio: ['pipe', process.stdout, process.stderr],
+        const xcpretty = (0, child_process_1.spawn)("xcpretty", allArgumentStrings(xcprettyInv.args), {
+            stdio: ["pipe", process.stdout, process.stderr],
         });
         (_a = xcodebuild.stdout) === null || _a === void 0 ? void 0 : _a.pipe(xcpretty.stdin);
         finishedPromise = finishedPromise.then((xcodeCode) => new Promise((resolve, reject) => {
-            xcpretty.on('error', reject);
-            xcpretty.on('exit', (xcprettyCode, xcprettySignal) => {
+            xcpretty.on("error", reject);
+            xcpretty.on("exit", (xcprettyCode, xcprettySignal) => {
                 if (xcodeCode == 0) {
                     if (xcprettyCode) {
                         resolve(xcprettyCode);
@@ -135,20 +135,20 @@ async function runXcodebuild(args, xcprettyInv) {
 }
 async function main() {
     let xcodebuildArgs = [];
-    core.startGroup('Validating input');
-    const workspace = core.getInput('workspace');
-    const project = core.getInput('project');
-    const spmPackage = core.getInput('spm-package');
-    if ((!workspace && !project && !spmPackage)
-        || (workspace && project && spmPackage)
-        || (workspace && project)
-        || (workspace && spmPackage)
-        || (project && spmPackage)) {
-        throw new Error('Either `project`, `workspace` or `spm-package-path` must be set, but they are mutually exclusive!');
+    core.startGroup("Validating input");
+    const workspace = core.getInput("workspace");
+    const project = core.getInput("project");
+    const spmPackage = core.getInput("spm-package");
+    if ((!workspace && !project && !spmPackage) ||
+        (workspace && project && spmPackage) ||
+        (workspace && project) ||
+        (workspace && spmPackage) ||
+        (project && spmPackage)) {
+        throw new Error("Either `project`, `workspace` or `spm-package-path` must be set, but they are mutually exclusive!");
     }
-    const scheme = core.getInput('scheme', { required: !!workspace || !!spmPackage });
-    function _pushArg(name, value) {
-        xcodebuildArgs.push({ name: `-${name}`, value: value });
+    const scheme = core.getInput("scheme", { required: !!workspace || !!spmPackage });
+    function _pushArg(name, value, noDash) {
+        xcodebuildArgs.push({ name: noDash ? name : `-${name}`, value: value });
     }
     function _pushArgWithValue(name, value, opts) {
         let processedValue = value;
@@ -159,15 +159,16 @@ async function main() {
         }
         if (opts === null || opts === void 0 ? void 0 : opts.isPath)
             processedValue = path.resolve(processedValue);
-        _pushArg(name, { originalValue: value, resolvedValue: processedValue });
+        _pushArg(name, { originalValue: value, resolvedValue: processedValue }, opts === null || opts === void 0 ? void 0 : opts.noDash);
     }
     function _addInputArg(inputName, argName, opts) {
         if (opts === null || opts === void 0 ? void 0 : opts.isList) {
             let values = core.getMultilineInput(inputName);
             if (values)
-                values.forEach(value => _pushArgWithValue(argName !== null && argName !== void 0 ? argName : inputName, value, {
+                values.forEach((value) => _pushArgWithValue(argName !== null && argName !== void 0 ? argName : inputName, value, {
                     isPath: opts === null || opts === void 0 ? void 0 : opts.isPath,
                     skipEmptyValues: true,
+                    noDash: opts === null || opts === void 0 ? void 0 : opts.noDash,
                 }));
         }
         else {
@@ -176,11 +177,12 @@ async function main() {
                 _pushArgWithValue(argName !== null && argName !== void 0 ? argName : inputName, value, {
                     isPath: opts === null || opts === void 0 ? void 0 : opts.isPath,
                     skipEmptyValues: false,
+                    noDash: opts === null || opts === void 0 ? void 0 : opts.noDash,
                 });
         }
     }
-    function addInputArg(inputName, argName) {
-        _addInputArg(inputName, argName);
+    function addInputArg(inputName, argName, noDash) {
+        _addInputArg(inputName, argName, { noDash });
     }
     function addPathArg(inputName, argName) {
         _addInputArg(inputName, argName, { isPath: true });
@@ -188,77 +190,83 @@ async function main() {
     function addListArg(inputName, argName) {
         _addInputArg(inputName, argName, { isList: true });
     }
-    function addBoolArg(inputName, argName) {
+    function addBoolArg(inputName, argName, noDash) {
         const value = core.getInput(inputName);
         if (value === null || value === void 0 ? void 0 : value.length)
-            _pushArgWithValue(argName !== null && argName !== void 0 ? argName : inputName, core.getBooleanInput(inputName) ? 'YES' : 'NO');
+            _pushArgWithValue(argName !== null && argName !== void 0 ? argName : inputName, core.getBooleanInput(inputName) ? "YES" : "NO", { noDash });
     }
     function addFlagArg(inputName, argName) {
         if (core.getInput(inputName).length && core.getBooleanInput(inputName))
             _pushArg(argName !== null && argName !== void 0 ? argName : inputName);
     }
     if (workspace) {
-        _pushArgWithValue('workspace', workspace, { isPath: true });
+        _pushArgWithValue("workspace", workspace, { isPath: true });
     }
     else if (project) {
-        _pushArgWithValue('project', project, { isPath: true });
+        _pushArgWithValue("project", project, { isPath: true });
     }
     if (scheme)
-        _pushArgWithValue('scheme', scheme);
-    addInputArg('target');
-    addInputArg('destination');
-    addInputArg('configuration');
-    addInputArg('sdk');
-    addInputArg('arch');
-    addPathArg('xcconfig');
-    addInputArg('jobs');
-    addFlagArg('parallelize-targets', 'parallelizeTargets');
-    addBoolArg('enable-code-coverage', 'enableCodeCoverage');
-    addBoolArg('parallel-testing-enabled');
-    addInputArg('maximum-concurrent-test-device-destinations');
-    addInputArg('maximum-concurrent-test-simulator-destinations');
-    addFlagArg('quiet');
-    addFlagArg('hide-shell-script-environment', 'hideShellScriptEnvironment');
-    addBoolArg('enable-address-sanitizer', 'enableAddressSanitizer');
-    addBoolArg('enable-thread-sanitizer', 'enableThreadSanitizer');
-    addBoolArg('enable-undefined-behavior-sanitizer', 'enableUndefinedBehaviorSanitizer');
-    addPathArg('result-bundle-path', 'resultBundlePath');
-    addPathArg('archive-path', 'archivePath');
-    addInputArg('result-bundle-version', 'resultBundleVersion');
-    addPathArg('cloned-source-packages-path', 'clonedSourcePackagesDirPath');
-    addPathArg('derived-data-path', 'derivedDataPath');
-    addPathArg('xcroot');
-    addPathArg('xctestrun');
-    addInputArg('test-plan', 'testPlan');
-    addListArg('only-testing');
-    addListArg('skip-testing');
-    addFlagArg('skip-unavailable-actions', 'skipUnavailableActions');
-    addFlagArg('allow-provisioning-updates', 'allowProvisioningUpdates');
-    addFlagArg('allow-provisioning-device-registration', 'allowProvisioningDeviceRegistration');
-    const buildSettings = core.getInput('build-settings');
+        _pushArgWithValue("scheme", scheme);
+    addInputArg("target");
+    addInputArg("destination");
+    addInputArg("configuration");
+    addInputArg("sdk");
+    addInputArg("arch");
+    addPathArg("xcconfig");
+    addInputArg("jobs");
+    addFlagArg("parallelize-targets", "parallelizeTargets");
+    addBoolArg("enable-code-coverage", "enableCodeCoverage");
+    addBoolArg("parallel-testing-enabled");
+    addInputArg("maximum-concurrent-test-device-destinations");
+    addInputArg("maximum-concurrent-test-simulator-destinations");
+    addFlagArg("quiet");
+    addFlagArg("hide-shell-script-environment", "hideShellScriptEnvironment");
+    addBoolArg("enable-address-sanitizer", "enableAddressSanitizer");
+    addBoolArg("enable-thread-sanitizer", "enableThreadSanitizer");
+    addBoolArg("enable-undefined-behavior-sanitizer", "enableUndefinedBehaviorSanitizer");
+    addPathArg("result-bundle-path", "resultBundlePath");
+    addPathArg("archive-path", "archivePath");
+    addInputArg("result-bundle-version", "resultBundleVersion");
+    addPathArg("cloned-source-packages-path", "clonedSourcePackagesDirPath");
+    addPathArg("derived-data-path", "derivedDataPath");
+    addPathArg("xcroot");
+    addPathArg("xctestrun");
+    addInputArg("test-plan", "testPlan");
+    addListArg("only-testing");
+    addListArg("skip-testing");
+    addFlagArg("skip-unavailable-actions", "skipUnavailableActions");
+    addFlagArg("allow-provisioning-updates", "allowProvisioningUpdates");
+    addFlagArg("allow-provisioning-device-registration", "allowProvisioningDeviceRegistration");
+    addInputArg("code-sign-identity", "CODE_SIGN_IDENTITY", true);
+    addBoolArg("code-signing-required", "CODE_SIGNING_REQUIRED", true);
+    const buildSettings = core.getInput("build-settings");
     if (buildSettings)
-        xcodebuildArgs.push(...buildSettings.split(' ').map(v => { return { name: v }; }));
-    const action = core.getInput('action', { required: true });
-    xcodebuildArgs.push(...action.split(' ').map(v => { return { name: v }; }));
-    const useXcpretty = core.getBooleanInput('use-xcpretty', { required: true });
-    const useColoredXCPrettyOutput = core.getBooleanInput('xcpretty-colored-output', { required: useXcpretty });
-    const dryRun = core.isDebug() && core.getInput('dry-run') == 'true';
+        xcodebuildArgs.push(...buildSettings.split(" ").map((v) => {
+            return { name: v };
+        }));
+    const action = core.getInput("action", { required: true });
+    xcodebuildArgs.push(...action.split(" ").map((v) => {
+        return { name: v };
+    }));
+    const useXcpretty = core.getBooleanInput("use-xcpretty", { required: true });
+    const useColoredXCPrettyOutput = core.getBooleanInput("xcpretty-colored-output", { required: useXcpretty });
+    const dryRun = core.isDebug() && core.getInput("dry-run") == "true";
     // We allow other platforms for dry-runs since this speeds up tests (more parallel builds).
-    if (!dryRun && process.platform !== 'darwin')
-        throw new Error('This action only supports macOS!');
+    if (!dryRun && process.platform !== "darwin")
+        throw new Error("This action only supports macOS!");
     let xcPrettyInv;
     if (useXcpretty) {
-        xcPrettyInv = { args: useColoredXCPrettyOutput ? [{ name: '--color' }] : [] };
+        xcPrettyInv = { args: useColoredXCPrettyOutput ? [{ name: "--color" }] : [] };
     }
     else {
         xcPrettyInv = null;
     }
     core.endGroup();
-    await core.group('Composing command', async () => {
+    await core.group("Composing command", async () => {
         // We "abuse" ICommandArgument here a bit to make it easier to compose both output variants.
-        let allCommands = [{ name: 'xcodebuild' }].concat(xcodebuildArgs);
+        let allCommands = [{ name: "xcodebuild" }].concat(xcodebuildArgs);
         if (xcPrettyInv) {
-            allCommands.push({ name: '|' }, { name: 'xcpretty' });
+            allCommands.push({ name: "|" }, { name: "xcpretty" });
             allCommands.push(...xcPrettyInv.args);
         }
         let unprocessedInvocation = allArgumentStrings(allCommands, false, true);
@@ -269,26 +277,20 @@ async function main() {
                 resolvedValue: path.resolve(spmPackage),
             };
             function _combinedInv(inv, useResolved) {
-                return [
-                    'pushd', argumentValueString(spmPackageValue, useResolved, true),
-                    '&&',
-                    ...inv,
-                    ';',
-                    'popd',
-                ];
+                return ["pushd", argumentValueString(spmPackageValue, useResolved, true), "&&", ...inv, ";", "popd"];
             }
             unprocessedInvocation = _combinedInv(unprocessedInvocation, false);
             processedInvocation = _combinedInv(processedInvocation, true);
         }
-        const unprocessedCommand = unprocessedInvocation.join(' ');
-        const executedCommand = processedInvocation.join(' ');
-        core.setOutput('unprocessed-command', unprocessedCommand);
-        core.setOutput('executed-command', executedCommand);
+        const unprocessedCommand = unprocessedInvocation.join(" ");
+        const executedCommand = processedInvocation.join(" ");
+        core.setOutput("unprocessed-command", unprocessedCommand);
+        core.setOutput("executed-command", executedCommand);
         core.info(`Resolving paths for execution in: \`${unprocessedCommand}\``);
         core.info(`Executing: \`${executedCommand}\``);
     });
     if (!dryRun) {
-        core.startGroup('Running xcodebuild');
+        core.startGroup("Running xcodebuild");
         const cwd = process.cwd();
         if (spmPackage)
             process.chdir(spmPackage);
@@ -303,7 +305,7 @@ async function main() {
     }
 }
 try {
-    main().catch(error => core.setFailed(error.message));
+    main().catch((error) => core.setFailed(error.message));
 }
 catch (error) {
     core.setFailed(error.message);
